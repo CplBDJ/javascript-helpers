@@ -13,20 +13,20 @@ Small collection of JavaScript files that make programming easier.
 ```javascript
 let table = $table(
   $tr(
-    $th('Name'),
-    $th('Age')
+    $th('Name', {click: sortPeopleByName, className: 'clickable'}),  // Adds an event listener 'click' and classname clickable
+    $th('Age', {click: sortPeopleByAge, class: 'clickable'})  // Alternate way to add a class
   ),
   $tr(
     $td('John Doe'),
-    $td(42),
+    $td({className: 'align-number', data: {type: 'number'}}, 42),  // Adds class and data-type
   ),
   $tr(
     $td('Bob Smith'),
-    $td(73),
+    $td({className: 'align-number'}, 73, {data: {type: 'number'}),  // Can add what you want where you want.
   ),
   $tr(
     $td('Jane Doe'),
-    $td(40)
+    $td({className: 'align-number'}, 40)
   )
 document.body.append(table);
 ```
