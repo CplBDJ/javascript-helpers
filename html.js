@@ -36,7 +36,6 @@ class HTML {
 
     parseOptions(element, args) {
         args.forEach((arg) => {
-            console.log(typeof arg);
             if (typeof arg == 'string' || typeof arg == 'number') {
                 //element.appendChild(document.createTextNode(`${arg}`))
                 if (element.value === undefined) {
