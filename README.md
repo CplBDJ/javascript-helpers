@@ -11,6 +11,8 @@ Small collection of JavaScript files that make programming easier.
 
 ## html.js
 ```javascript
+
+// Standard use
 let table = $table(
   $tr(
     $th('Name', {click: sortPeopleByName, className: 'clickable'}),  // Adds an event listener 'click' and classname clickable
@@ -29,6 +31,13 @@ let table = $table(
     $td({className: 'align-number'}, 40)
   )
 document.body.append(table);
+
+// Advanced use with subclassed HTML elements.
+class HTMLInputElementNumeric extends HTMLInputElement { /* Your code here */ }
+customElements.define('input-numeric', HTMLInputElementNumeric, { extends: 'input' });
+$numericInput = (...args) => $HTML.customElement('input', 'input-numeric', ...args);
+let inputElement = $numbericInput(0);
+document.body.append(inputElement);
 ```
 
 ## http.js
