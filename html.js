@@ -9,6 +9,15 @@
  *             $td('row2', {className: 'align-right'})
  *         )
  *     );
+ *
+ * To use the custom element feature, you must first register the custom element. The 
+ * custom element must be a subclass of an HTMLElement.
+ * Example:
+ *     class HTMLInputElementNumeric extends HTMLInputElement { /* Your code here */ }
+ *     customElements.define('input-numeric', HTMLInputElementNumeric, { extends: 'input' });
+ *     $numericInput = (...args) => $HTML.customElement('input', 'input-numeric', ...args);
+ *     var input = $numbericInput(0);
+ * 
  * Inspired by: https://gist.github.com/davidgilbertson/c9ff092236c695dfe8c57d23f7a1a0de
  ***************************************************************************************/
 
@@ -17,10 +26,24 @@ class HTML {
 
     element(tag, ...args) {
         let element = document.createElement(tag);
+        return this.parseOptions(element, args);
+    };
 
+    customElement(elementName, extendsElement, ...args) {
+        let element = document.createElement(elementName, { is: extendsElement });
+        return this.parseOptions(element, args);
+    };
+
+    parseOptions(element, args) {
         args.forEach((arg) => {
-            if (this.isInstanceOf(arg, 'string', 'number')) {
-                element.appendChild(document.createTextNode(arg))
+            console.log(typeof arg);
+            if (typeof arg == 'string' || typeof arg == 'number') {
+                //element.appendChild(document.createTextNode(`${arg}`))
+                if (element.value === undefined) {
+                    element.appendChild(document.createTextNode(`${arg}`));
+                } else {
+                    element.value = arg;
+                };
             } else if (arg instanceof HTMLElement) {
                 element.appendChild(arg);
             } else if (this.isInstanceOf(arg, 'Object')) {
@@ -46,7 +69,6 @@ class HTML {
                 });
             };
         });
-    
         return element;
     };
 
